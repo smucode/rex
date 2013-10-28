@@ -1,6 +1,6 @@
-_       = require 'underscore'
 vows    = require 'vows'
 assert  = require 'assert'
+_       = require 'underscore'
 
 Piece   = require '../src/piece'
 Board   = require '../src/board'
@@ -15,7 +15,7 @@ vows
       'they should be bishops': (topic) ->
         piece = topic._getPiece('a8')
         assert.instanceOf(piece, Bishop)
-        
+
         piece = topic._getPiece('e5')
         assert.instanceOf(piece, Bishop)
 
@@ -36,7 +36,7 @@ vows
         assert.equal(piece.moves.length, 1)
 
     'given a board with a pinned bishop' :
-      
+
       topic : new Board('r7/8/8/8/8/8/B7/K7 w KQkq - 0 1')
 
       'it should not be able to move': (topic) ->

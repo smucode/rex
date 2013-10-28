@@ -16,15 +16,19 @@ module.exports = function(grunt) {
       }
     },
     coffee: {
-      app: {
+      src: {
+        expand: true,
+        flatten: true,
         src: ['src/*.coffee'],
         dest: 'target/src',
-        options: { bare: true }
+        ext: '.js'
       },
       test: {
+        expand: true,
+        flatten: true,
         src: ['test/*.coffee'],
         dest: 'target/test',
-        options: { bare: true }
+        ext: '.js'
       }
     },
     concat: {
@@ -41,19 +45,7 @@ module.exports = function(grunt) {
           'target/src/piece_factory.js',
           'target/src/board.js'
         ],
-        dest: 'target/rex.js'
-      }
-    },
-    shell: {
-      build: {
-          command: 'coffee tools/build.coffee',
-          stderr: true,
-          stdout: true
-      },
-      test: {
-          command: 'vows test/*.coffee',
-          stderr: true,
-          stdout: true
+        dest: 'rex.js'
       }
     },
     uglify: {
@@ -62,26 +54,31 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'rex.js': ['rex.min.js']
+          'rex.min.js': ['rex.js']
         }
+      }
+    },
+    vows: {
+      all: {
+        src: ["target/test/*.js"],
+        options: {}
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks("grunt-vows");
 
   grunt.registerTask('default', [
-    'shell:test',
     'clean',
     'coffeelint',
     'coffee',
+    'vows',
     'concat',
-    'shell:build',
     'uglify'
   ]);
 
