@@ -17,6 +17,9 @@ module.exports = function(grunt) {
     },
     coffee: {
       src: {
+        options: {
+          bare: true
+        },
         expand: true,
         flatten: true,
         src: ['src/*.coffee'],
@@ -34,6 +37,7 @@ module.exports = function(grunt) {
     concat: {
       all: {
         src: [
+          'target/src/adapter.js',
           'target/src/fen.js',
           'target/src/piece.js',
           'target/src/rook.js',
@@ -43,18 +47,21 @@ module.exports = function(grunt) {
           'target/src/queen.js',
           'target/src/pawn.js',
           'target/src/piece_factory.js',
-          'target/src/board.js'
+          'target/src/board.js',
+          'target/src/export.js'
         ],
-        dest: 'rex.js'
+        dest: 'target/rex.js'
       }
     },
     uglify: {
       options: {
-        mangle: false
+        mangle: false,
+        banner: "(function() {",
+        footer: "}).call(this);"
       },
       my_target: {
         files: {
-          'rex.min.js': ['rex.js']
+          'rex.js': ['target/rex.js']
         }
       }
     },
