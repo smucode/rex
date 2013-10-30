@@ -12,7 +12,7 @@ vows
 
       'it should call board.move': (topic) ->
         args = null
-        topic.board = move: -> args = arguments
+        topic.board.move = -> args = arguments
 
         topic.select 'a1'
         topic.select 'c1'
@@ -30,9 +30,6 @@ vows
 
       topic: -> new Rex
 
-      'it should have a select fn': (topic) ->
-        assert.equal 'function', typeof topic.select
-
       'state is updated on move': (topic) ->
         state = topic.state
 
@@ -43,6 +40,11 @@ vows
 
         assert state.board.e4, 'state.e4 should be defined'
 
-        console.log state
+      'state should contains pieces': (topic) ->
+        assert.equal '♙', topic.state.board['c2'].piece
+
+      'state should contain the selected piece if it is valid': (topic) ->
+        topic.select 'c2'
+        assert topic.state.board['c2'].selected
 
   .export(module)
