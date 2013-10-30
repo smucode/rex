@@ -120,11 +120,8 @@ class Board
     @_board[idx]
 
   _getPieces: (color) ->
-    return _.filter @_board, (p) ->
-      if (!color)
-        return p
-      else
-        return p && p.color == color
+    _.filter @_board, (p) ->
+      p and p.color is color
 
   _getPiece: (pos) ->
     idx = @_posToIdx(pos)

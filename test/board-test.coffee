@@ -12,14 +12,17 @@ Queen   = require '../src/queen'
 vows
   .describe('Board').addBatch
     'when creating a board with empty ctor':
-      
+
       topic : new Board()
 
       'it should not be null': (topic) ->
         assert.notEqual(null, topic)
 
-      'number of pieces should be 32': (topic) ->
-        assert.equal(topic._getPieces().length, 32)
+      'number of white pieces should be 16': (topic) ->
+        assert.equal(topic._getPieces(1).length, 16)
+
+      'number of black pieces should be 16': (topic) ->
+        assert.equal(topic._getPieces(-1).length, 16)
 
       'the piece at a2 should have some moves': (topic) ->
         moves = topic.getMoves('a2')
@@ -87,7 +90,7 @@ vows
 
     'a board where pawn can capture and promote':
       topic : new Board('6r1/P6P/8/8/8/8/8/8 w KQkq - 0 1')
-      
+
       'should be promoted to queen': (topic) ->
         move = topic.move('h7', 'g8')
         p = topic._getPiece('g8')
@@ -120,8 +123,11 @@ vows
     'creating a board':
       topic : new Board('p6R/p7/p2p5/p7/8/8/8/k6Q w KQkq - 0 1')
 
-      'it should contain 8 pieces': (topic) ->
-        assert.equal(topic._getPieces().length, 8)
+      'it should contain 2 white pieces': (topic) ->
+        assert.equal(topic._getPieces(1).length, 2)
+
+      'it should contain 6 black pieces': (topic) ->
+        assert.equal(topic._getPieces(-1).length, 6)
 
       'a1 should contain a king': (topic) ->
         assert.instanceOf(topic._getPiece('a1'), King)
@@ -202,17 +208,17 @@ vows
 
     'given a board where white can castle kingside':
       topic: new Board('8/8/8/8/8/8/8/4K2R w K - 0 1')
-      
+
       'castling should update internal board representation': (topic) ->
         topic.move('e1', 'g1')
-        
+
         assert.instanceOf(topic._board[topic._posToIdx('g1')], King)
         assert.instanceOf(topic._board[topic._posToIdx('f1')], Rook)
 
     'given a default board to test events':
       topic:
         new Board
-      
+
       'registering event should fire immediately': (topic) ->
         state = null
         topic.onMove (s) ->
@@ -228,7 +234,7 @@ vows
           state = s
 
         topic.move 'd2', 'd4'
-        
+
         assert.equal 'b', state.active_color
         assert.equal 32, _.size(state.board)
         assert.equal 10, _.size(state.valid_moves)
@@ -237,7 +243,7 @@ vows
 
     'given a edgecase board':
       topic: new Board('r6r/1pk2np1/2p2p2/1p2p3/4P3/P1N1P1K1/1PP3P1/3R3R w - - 2 20')
-      
+
       'assert move is valid': (topic) ->
         topic.move('h1', 'h8')
 
