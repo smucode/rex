@@ -29,8 +29,9 @@ module.exports = class Rex
     @select = @_curry
 
   _curry: (src) ->
-    @_updateState(selected: src)
-    @select = _.bind @_move, @, src
+    if @board.getState().valid_moves[src]
+      @_updateState(selected: src)
+      @select = _.bind @_move, @, src
 
   # to: <pos>
   # from: <pos>
