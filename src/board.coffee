@@ -11,10 +11,9 @@ class Board
   _state: 'move'
   _files: 'abcdefgh'
 
-  eventHandlers: []
-
   constructor: (fen) ->
     @_state = {}
+    @eventHandlers = []
     @_fen = new Fen(fen)
     @_board = new Array(128)
     @factory = new Factory
@@ -43,7 +42,7 @@ class Board
         @_updateArray(from, to)
         @_fen.move(from, to)
     else
-      throw new Error('unable to move from ' + from + ' to ' + to)
+      @_throwAndLog('unable to move from ' + from + ' to ' + to)
 
     if @_fen.halfmove >= 50
       @_state.finished = 'halfmoves'
@@ -59,14 +58,14 @@ class Board
 
   _verifyMove: (source) ->
     if !source
-      throw new Error('there is no piece to move')
+      @_throwAndLog('there is no piece to move')
 
     if @_getCurrentColor() != source.color
-      throw new Error('cannot move out of order')
+      @_throwAndLog('cannot move out of order')
 
   _verifyIndex: (source, toIdx) ->
     if source.moves.indexOf(toIdx) == -1
-      throw new Error('there is no piece at ' + @_idxToPos(toIdx) + ': ' + @_fen.toString())
+      @_throwAndLog('there is no piece at ' + @_idxToPos(toIdx) + ': ' + @_fen.toString())
 
   _promotePawn: (from, to, source, toIdx) ->
     @_fen.move(from, to)
@@ -104,7 +103,7 @@ class Board
 
   _posToIdx: (pos) ->
     if (!pos || typeof pos != 'string' || !pos.match(/[a-h]{1}[0-8]{1}/))
-      throw new Error('illegal pos ' + pos)
+      @_throwAndLog('illegal pos ' + pos)
     c = @_files.indexOf(pos[0])
     return c + ((pos[1] - 1) * 16)
 
@@ -113,7 +112,7 @@ class Board
     rank = Math.floor(idx / 16)
     pos = @_files[file] + (rank + 1)
     if (typeof pos != 'string')
-      throw new Error('illegal idx ' + idx)
+      @_throwAndLog('illegal idx ' + idx)
     pos
 
   _getPieceAt: (idx) ->
@@ -189,6 +188,10 @@ class Board
           @_board[@_posToIdx('d8')] = @_board[@_posToIdx('a8')]
           @_board[@_posToIdx('d8')].idx = @_posToIdx('d8')
           @_board[@_posToIdx('a8')] = null
+
+  _throwAndLog: (message) ->
+    console.info @_fen.toString() if window
+    throw new Error message
 
   getCheckingPieces: ->
     currentColor = @_getCurrentColor()
