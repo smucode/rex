@@ -63,5 +63,10 @@ vows
         assert rex.state.board['c3']?.target
         assert not rex.state.board['c3'].source
 
+      'selecting the same piece twice should deselect it': ->
+        rex = new Rex
+        rex.select 'c2'
+        rex.select 'c2'
+        assert not rex.state.board['c2'].selected
 
   .export(module)

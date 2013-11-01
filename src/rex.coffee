@@ -44,7 +44,7 @@ class Rex
     , {}
 
   _move: (src, dst) ->
-    @board.move src, dst
+    @board.move src, dst unless src is dst
     @_updateState()
     @select = @_curry
 
