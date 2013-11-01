@@ -29,7 +29,7 @@ class Fen
     piece = @pieces[from]
     if (!piece)
       throw new Error('You must select a valid piece to move: ' + from)
-    
+
   _updateFullmoveNumber: ->
     if (@activeColor == 'w')
       @fullmove++
@@ -98,7 +98,7 @@ class Fen
 
   _updateActiveColor: ->
     @activeColor = if @activeColor == 'w' then 'b' else 'w'
-  
+
   _parse: (fen) ->
     arr = if fen.split then fen.split(' ') else []
     if (!arr || arr.length != 6)
@@ -148,7 +148,7 @@ class Fen
 
   _parseFullmoveNumber: (str) ->
     @fullmove = parseInt(str, 10)
-  
+
   toString: () ->
     fenString = @_readPlacement()
     fenString += ' ' + @_readColourToMove()

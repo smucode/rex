@@ -42,6 +42,9 @@ class Rex
       if opts.selected
         board[square.pos].target = _.contains state.valid_moves[opts.selected], square.pos
 
+      board[square.pos].last_target = true if square.pos is state.to
+      board[square.pos].last_source = true if square.pos is state.from
+
       board
     , {}
 

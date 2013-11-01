@@ -85,6 +85,15 @@ vows
 
         assert.equal rex.state.active_color, 'b'
 
-      # 'expose move and verify state'
+      'should expose last move': ->
+        rex = new Rex
+
+        rex.select 'e2'
+        rex.select 'e4'
+
+        assert rex.state.board['e2'].last_source
+        assert rex.state.board['e4'].last_target
+
+      # 'expose move event and verify state'
 
   .export(module)
