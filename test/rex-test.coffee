@@ -94,6 +94,29 @@ vows
         assert rex.state.board['e2'].last_source
         assert rex.state.board['e4'].last_target
 
+      'should expose checkmate': ->
+        rex = new Rex 'rnbqkbnr/ppp2ppp/8/3pp3/6P1/5P2/PPPPP2P/RNBQKBNR w KQkq e6 0 3'
+
+        rex.select 'a2'
+        rex.select 'a3'
+        rex.select 'd8'
+        rex.select 'h4'
+
+        assert rex.state.board['e1'].checkmate
+        assert.equal rex.state.finished, 'checkmate'
+
+      'should expose check': ->
+        rex = new Rex 'rnb1kbnr/pppp1ppp/5q2/8/4Pp2/8/PPPPK1PP/RNBQ1BNR w kq - 0 4'
+
+        rex.select 'e2'
+        rex.select 'd3'
+        rex.select 'f6'
+        rex.select 'd6'
+
+        assert rex.state.board['d3'].check
+        assert rex.state.check
+
+
       # 'expose move event and verify state'
 
   .export(module)

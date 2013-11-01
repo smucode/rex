@@ -26,7 +26,12 @@ class Rex
   _updateState: (opts = {}) ->
     state = @board.getState()
 
-    @state.active_color = @board.getState().active_color
+    @state.check = state.check
+    @state.finished = state.finished
+    @state.active_color = state.active_color
+
+    if state.finished or state.check
+      kingInDespair = if state.active_color is 'w' then 'K' else 'k'
 
     @state.board = _.reduce @squares, (board, square) =>
       board[square.pos] =
@@ -38,6 +43,10 @@ class Rex
         board[square.pos].piece = @_pieces[state.board[square.pos]]
         board[square.pos].selected = opts.selected is square.pos
         board[square.pos].source = not opts.selected and state.valid_moves[square.pos] and true
+
+        if kingInDespair and kingInDespair is board[square.pos].code
+          board[square.pos].check = state.check
+          board[square.pos].checkmate = state.finished is 'checkmate'
 
       if opts.selected
         board[square.pos].target = _.contains state.valid_moves[opts.selected], square.pos
