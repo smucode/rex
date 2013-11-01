@@ -26,12 +26,12 @@ vows
 
         state = rex.state
 
-        assert !state.board.e4, 'state.e4 should be undefined'
+        assert not state.board.e4.piece, 'e4 should be empty'
 
         rex.select 'e2'
         rex.select 'e4'
 
-        assert state.board.e4, 'state.e4 should be defined'
+        assert state.board.e4.piece, 'e4 should not be empty'
 
       'state should contains pieces': ->
         rex = new Rex
@@ -46,5 +46,17 @@ vows
         rex = new Rex
         rex.select 'a8'
         assert !rex.state.board['a8'].selected
+
+      'state should contain legal source moves': ->
+        rex = new Rex
+        assert rex.state.board['c2'].source
+        assert not rex.state.board['a8'].source
+
+      'state should contain legal target moves': ->
+        rex = new Rex
+        rex.select 'c2'
+        assert rex.state.board['c3']?.target
+        assert not rex.state.board['c3'].source
+
 
   .export(module)
