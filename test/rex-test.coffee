@@ -42,6 +42,11 @@ vows
         rex.select 'c2'
         assert rex.state.board['c2'].selected
 
+      'state should only select the selected piece': ->
+        rex = new Rex
+        rex.select 'c2'
+        assert not rex.state.board['e2'].selected
+
       'state should not contain the selected piece if it is invalid': ->
         rex = new Rex
         rex.select 'a8'

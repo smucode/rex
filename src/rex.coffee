@@ -34,7 +34,7 @@ class Rex
       if state.board[square.pos]
         board[square.pos].code = state.board[square.pos]
         board[square.pos].piece = @_pieces[state.board[square.pos]]
-        board[square.pos].selected = opts.selected
+        board[square.pos].selected = opts.selected is square.pos
         board[square.pos].source = not opts.selected and state.valid_moves[square.pos] and true
 
       if opts.selected
