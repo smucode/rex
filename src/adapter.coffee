@@ -7,6 +7,7 @@ require = (name) ->
     when './pawn' then Pawn
     when './king' then King
     when './rook' then Rook
+    when './board' then Board
     when './piece' then Piece
     when './queen' then Queen
     when './knight' then Knight

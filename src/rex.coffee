@@ -2,7 +2,7 @@ _ = require 'underscore'
 
 Board = require './board'
 
-module.exports = class Rex
+class Rex
 
   _pieces:
     P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
@@ -55,3 +55,5 @@ module.exports = class Rex
   #     "stalemate": t/f
   #   }
   # }
+
+module.exports = Rex

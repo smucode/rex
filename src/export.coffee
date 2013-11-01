@@ -1,3 +1,1 @@
-this.Rex =
-  Fen: Fen
-  Board: Board
+this.Rex = Rex
