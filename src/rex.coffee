@@ -26,6 +26,8 @@ class Rex
   _updateState: (opts = {}) ->
     state = @board.getState()
 
+    @state.active_color = @board.getState().active_color
+
     @state.board = _.reduce @squares, (board, square) =>
       board[square.pos] =
         pos: square.pos

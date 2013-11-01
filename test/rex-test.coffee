@@ -75,4 +75,16 @@ vows
         rex.select 'h7'
         assert rex.state.board['c2'].selected
 
+      'should expose active color': ->
+        rex = new Rex
+
+        assert.equal rex.state.active_color, 'w'
+
+        rex.select 'e2'
+        rex.select 'e4'
+
+        assert.equal rex.state.active_color, 'b'
+
+      # 'expose move and verify state'
+
   .export(module)
