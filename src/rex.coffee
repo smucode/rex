@@ -8,7 +8,7 @@ class Rex
     P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
     p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚'
 
-  _squares: [7..0].reduce (m, f) ->
+  squares: [7..0].reduce (m, f) ->
     files = 'abcdefgh'.split('')
     for r in [0..7]
       m.push
@@ -26,7 +26,7 @@ class Rex
   _updateState: (opts = {}) ->
     state = @board.getState()
 
-    @state.board = _.reduce @_squares, (board, square) =>
+    @state.board = _.reduce @squares, (board, square) =>
       board[square.pos] =
         pos: square.pos
         col: square.col
@@ -44,9 +44,10 @@ class Rex
     , {}
 
   _move: (src, dst) ->
-    @board.move src, dst unless src is dst
-    @_updateState()
-    @select = @_curry
+    if src is dst or _.contains @board.getState().valid_moves[src], dst
+      @board.move src, dst unless src is dst
+      @_updateState()
+      @select = @_curry
 
   _curry: (src) ->
     if @board.getState().valid_moves[src]
@@ -67,8 +68,8 @@ class Rex
   # ok  "selected": t/f                # is the piece currently selected?
   #     "last_source": t/f             # source of last move
   #     "last_target": t/f             # target of last move
-  # x   "legal_target": t/f            # is this a legal dst move?
-  # x   "legal_source": t/f            # is this a legar src move?
+  # ok  "target": t/f                  # is this a legal dst move?
+  # ok  "source": t/f                  # is this a legar src move?
 
   #     "mate": t/f
   #     "check": t/f

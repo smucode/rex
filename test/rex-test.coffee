@@ -69,4 +69,10 @@ vows
         rex.select 'c2'
         assert not rex.state.board['c2'].selected
 
+      'selecting a invalid target should not change state': ->
+        rex = new Rex
+        rex.select 'c2'
+        rex.select 'h7'
+        assert rex.state.board['c2'].selected
+
   .export(module)
