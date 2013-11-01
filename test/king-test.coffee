@@ -13,18 +13,18 @@ vows
       'they should be kings': (topic) ->
         king = topic._getPiece('a8')
         assert.instanceOf(king, King)
-        
+
         king = topic._getPiece('e5')
         assert.instanceOf(king, King)
-      
+
       'the king in the center should have eight moves': (topic) ->
         king = topic._getPiece('e5')
         assert.equal(king.moves.length, 8)
-      
+
       'the king in the corner should have three moves': (topic) ->
         king = topic._getPiece('a8')
         assert.equal(king.moves.length, 3)
-      
+
       'recalculating should give the same answer': (topic) ->
         king = topic._getPiece('a8')
         king.calculate()
@@ -148,5 +148,10 @@ vows
       'king should have 1 move': (topic) ->
         piece = topic._getPiece('c1')
         assert.equal(piece.moves.length, 1)
+
+    'king cannot castle when he is in check': ->
+      board = new Board('r4rk1/p1p2ppp/bpn1p3/3BP3/1b1P1B1P/2N5/PPPQ1P1P/R3K1q1 w Q - 0 15')
+      assert.equal board._getPiece('e1').moves.length, 0
+      assert.equal board._state.finished, 'checkmate'
 
   .export(module)

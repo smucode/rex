@@ -11,12 +11,12 @@ class King extends Piece
     @idx = idx
     @color = color
     @board = board
-  
+
     @type = 3
     @moves = []
     @attacks = []
     @behindKing = null
-  
+
     @_castlingIdx = if @color == 1 then 4 else (4 + (16 * 7))
     @_castling = if @color == 1 then {Q: -1, K: 1} else {q: -1, k: 1}
 
@@ -30,9 +30,8 @@ class King extends Piece
     @_addCastlingMoves()
 
   canCastle: (code, direction) ->
-    hasCastlingRights = @idx == @_castlingIdx && @board.canCastle(code)
-    if !hasCastlingRights
-      return false
+    hasCastlingRights = @idx is @_castlingIdx and @board.canCastle(code)
+    return false if not hasCastlingRights or @isAttacked(@idx)
     return !@_pathToRookIsBlocked(code)
 
   _pathToRookIsBlocked: (code) ->
