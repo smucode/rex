@@ -68,27 +68,4 @@ class Rex
       @_updateState(selected: src)
       @select = _.bind @_move, @, src
 
-  # to: <pos>
-  # from: <pos>
-  # check: t/f
-  # valid_moves: {}
-  # active_color: w/b
-  # finished: 'checkmate', 'stalemate', 'halfmoves'
-
-  # board: {
-  #   "a1": {
-  # ok  "code":                        # the piece code
-  # ok  "piece": '♖'                   # the ascii piece
-  # ok  "selected": t/f                # is the piece currently selected?
-  #     "last_source": t/f             # source of last move
-  #     "last_target": t/f             # target of last move
-  # ok  "target": t/f                  # is this a legal dst move?
-  # ok  "source": t/f                  # is this a legar src move?
-
-  #     "mate": t/f
-  #     "check": t/f
-  #     "stalemate": t/f
-  #   }
-  # }
-
 module.exports = Rex
