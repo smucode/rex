@@ -29,7 +29,8 @@ class King extends Piece
     @_addRegularMoves()
     @_addCastlingMoves()
 
-  canCastle: (code, direction) ->
+  _canCastle: (code, direction) ->
+    # @idx is @_castlingIdx and # surplus?
     hasCastlingRights = @idx is @_castlingIdx and @board.canCastle(code)
     return false if not hasCastlingRights or @isAttacked(@idx)
     return !@_pathToRookIsBlocked(code)
@@ -62,7 +63,7 @@ class King extends Piece
 
   _addCastlingMoves: ->
     _.each @_castling, (direction, code) =>
-      if @canCastle(code)
+      if @_canCastle(code, direction)
         @moves.push @idx + (direction * 2)
 
 module.exports = King

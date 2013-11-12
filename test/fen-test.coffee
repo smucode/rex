@@ -279,7 +279,15 @@ vows
         topic.move('e1', 'g1')
         assert.equal(topic._readCastling(), '-')
 
-    # illegal, can castle, but no rook?
-    # 4k3/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1
+    'given a full board where rook is missing':
+      topic : new Fen 'r2qk1nr/ppp2ppp/8/3ppb2/3n4/1P1P2PN/PrPQPPBP/R3K2R b KQkq - 0 9'
+
+      'castling should not be allowed queenside': (topic) ->
+        topic.move('b2', 'a1')
+
+        assert.isTrue(topic.canCastle('K'))
+        assert.isTrue(topic.canCastle('k'))
+        assert.isTrue(topic.canCastle('q'))
+        assert.isFalse(topic.canCastle('Q'))
 
   .export(module)

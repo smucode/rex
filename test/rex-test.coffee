@@ -63,6 +63,11 @@ vows
         assert rex.state.board['c3']?.target
         assert not rex.state.board['c3'].source
 
+      'all sources are valid, even if one is selected': ->
+        rex = new Rex
+        rex.select 'e2'
+        assert rex.state.board['c2'].source
+
       'selecting the same piece twice should deselect it': ->
         rex = new Rex
         rex.select 'c2'
@@ -74,6 +79,12 @@ vows
         rex.select 'c2'
         rex.select 'h7'
         assert rex.state.board['c2'].selected
+
+      'selecting another legal move should set it as selected': ->
+        rex = new Rex
+        rex.select 'f2'
+        rex.select 'e2'
+        assert rex.state.board['e2'].selected
 
       'should expose active color': ->
         rex = new Rex

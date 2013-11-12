@@ -58,6 +58,16 @@ class Fen
     if (!@castling.length)
       return false
 
+    switch (to)
+      when 'a1'
+        @castling = _.without(@castling, 'Q')
+      when 'a8'
+        @castling = _.without(@castling, 'q')
+      when 'h1'
+        @castling = _.without(@castling, 'K')
+      when 'h8'
+        @castling = _.without(@castling, 'k')
+
     switch (from)
       when 'a1'
         @castling = _.without(@castling, 'Q')

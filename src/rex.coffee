@@ -42,7 +42,7 @@ class Rex
         board[square.pos].code = state.board[square.pos]
         board[square.pos].piece = @_pieces[state.board[square.pos]]
         board[square.pos].selected = opts.selected is square.pos
-        board[square.pos].source = not opts.selected and state.valid_moves[square.pos] and true
+        board[square.pos].source = state.valid_moves[square.pos]
 
         if kingInDespair and kingInDespair is board[square.pos].code
           board[square.pos].check = state.check
@@ -58,10 +58,12 @@ class Rex
     , {}
 
   _move: (src, dst) ->
-    if src is dst or _.contains @board.getState().valid_moves[src], dst
+    if src is dst or @state.board[dst].target
       @board.move src, dst unless src is dst
       @_updateState()
       @select = @_curry
+    else if @board.getState().valid_moves[dst]
+      @_curry(dst)
 
   _curry: (src) ->
     if @board.getState().valid_moves[src]
