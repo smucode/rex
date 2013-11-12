@@ -30,10 +30,9 @@ class King extends Piece
     @_addCastlingMoves()
 
   _canCastle: (code, direction) ->
-    # @idx is @_castlingIdx and # surplus?
-    hasCastlingRights = @idx is @_castlingIdx and @board.canCastle(code)
-    return false if not hasCastlingRights or @isAttacked(@idx)
-    return !@_pathToRookIsBlocked(code)
+    return if not @board.canCastle(code)
+    return if @isAttacked(@idx)
+    return not @_pathToRookIsBlocked(code)
 
   _pathToRookIsBlocked: (code) ->
     return _.find @CASTLE_SQUARES[code.toLowerCase()], (offset) =>
@@ -56,10 +55,10 @@ class King extends Piece
       if @board.isOnBoard(target)
         @attacks.push(target)
 
-  isSquareBehindCheckedKing: (square)->
+  isSquareBehindCheckedKing: (square) ->
     currentColor = @board._getCurrentColor()
     return _.detect @board._getPieces(currentColor * -1), (p) =>
-      return p.behindKing == square
+      return p and p.behindKing == square
 
   _addCastlingMoves: ->
     _.each @_castling, (direction, code) =>

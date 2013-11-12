@@ -27,10 +27,10 @@ class Piece
     @attacks = []
     @pinning = {}
     @behindKing = null
-    
+
     _.each directions, (direction) =>
       @_addNextDirectionalMove(direction)
-    
+
     @_removePinnedMoves()
     @_removeMovesNotHelpingCheckedKing()
 
@@ -43,7 +43,7 @@ class Piece
   _addNextDirectionalMove: (direction, offset) ->
     offset = offset || 1
     target = @idx + (offset * direction)
-    
+
     if @canMoveTo(target)
       @moves.push(target)
       @attacks.push(target)
@@ -69,7 +69,7 @@ class Piece
     piece = @board._getPieceAt(square)
     if piece.type == 3
       @checks = []
-      
+
       @_setMoveBehindKing(direction, offset)
       @_backtrackPinnedMoves(direction, --offset, @checks)
 
@@ -84,9 +84,7 @@ class Piece
         @_backtrackPinnedMoves(direction, offset, @pinning[pinned])
 
   _setMoveBehindKing: (direction, offset) ->
-    behind = @idx + ((offset + 1) * direction)
-    if @canMoveTo(behind)
-      @behindKing = behind
+    @behindKing = @idx + ((offset + 1) * direction)
 
   _backtrackPinnedMoves: (direction, offset, arr) ->
     target = @idx + (offset * direction)

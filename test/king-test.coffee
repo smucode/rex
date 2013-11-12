@@ -154,4 +154,9 @@ vows
       assert.equal board._getPiece('e1').moves.length, 0
       assert.equal board._state.finished, 'checkmate'
 
+    'king cannot capture when it would still put him in check': ->
+      board = new Board('5k1r/1pp4p/4pn2/4p3/1p2pP1P/1P1P2P1/2r5/3bK1q1 w - - 0 0')
+      assert.equal board._getPiece('e1').moves.length, 0
+      assert.equal board._state.finished, 'checkmate'
+
   .export(module)
