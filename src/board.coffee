@@ -15,8 +15,8 @@ class Board
     @_state = {}
     @eventHandlers = []
     @_fen = new Fen(fen)
-    @_board = new Array(128)
     @factory = new Factory
+    @_board = new Array(128)
 
     _.each @_fen.pieces, (piece, pos) =>
       idx = @_posToIdx(pos)

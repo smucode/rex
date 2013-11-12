@@ -16,4 +16,7 @@ class History
     next_ply = @plys.length
     @plys.push _.extend {ply: next_ply}, obj
 
+  back: ->
+    @plys[@plys.length - 3]
+
 module.exports = History

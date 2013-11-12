@@ -22,8 +22,11 @@ class Rex
     @state = {}
     @select = @_curry
     @board = new Board fen
-    @_history = new History fen
+    @_history = new History @board._fen.toString()
     @_updateState()
+
+  fenAtPreviousMove: ->
+    @_history.back().fen
 
   _updateState: (opts = {}) ->
     state = @board.getState()
