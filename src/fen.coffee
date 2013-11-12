@@ -19,6 +19,7 @@ class Fen
     @_updateHalfmoveClock from, to
     @_updateFullmoveNumber()
     @_updatePiecePlacement from, to
+    delete @pieces[from]
 
   canCastle: (letter) ->
     _.include(@castling, letter)
@@ -96,8 +97,6 @@ class Fen
 
   _updatePiecePlacement: (from, to) ->
     piece = @pieces[from]
-    delete(@pieces[from]) # dafuq
-
     if (@_isPawn(piece) && (to.charAt(1) ==  '1' || to.charAt(1) == '8'))
       @pieces[to] = (if piece == 'P' then 'Q' else 'q')
     else

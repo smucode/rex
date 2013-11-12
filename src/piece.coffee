@@ -67,7 +67,7 @@ class Piece
 
   _checkKingAttacks: (square, direction, offset) ->
     piece = @board._getPieceAt(square)
-    if piece.type == 3
+    if piece.type == @types.KING
       @checks = []
 
       @_setMoveBehindKing(direction, offset)
@@ -79,7 +79,7 @@ class Piece
       @_checkPinning(pinned, direction, ++offset)
     else if @canCapture(target)
       piece = @board._getPieceAt(target)
-      if piece.type == 3 && piece.color != @color
+      if piece.type == @types.KING && piece.color != @color
         @pinning[pinned] = []
         @_backtrackPinnedMoves(direction, offset, @pinning[pinned])
 
