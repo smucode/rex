@@ -48,6 +48,7 @@ module.exports = function(grunt) {
           'target/src/pawn.js',
           'target/src/piece_factory.js',
           'target/src/board.js',
+          'target/src/history.js',
           'target/src/rex.js',
           'target/src/export.js'
         ],

@@ -8,6 +8,16 @@ vows
   .describe('Rex').addBatch
     'after selecting twice':
 
+      'it should update history': ->
+        rex = new Rex
+
+        rex.select 'e2'
+        rex.select 'e4'
+
+        move = rex._history.at(1)
+        assert.equal move.fen, 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1'
+        assert.equal move.ply, 1
+
       'it should call board.move': ->
         rex = new Rex
         args = null

@@ -12,4 +12,5 @@ require = (name) ->
     when './queen' then Queen
     when './knight' then Knight
     when './bishop' then Bishop
+    when './history' then History
     when './piece_factory' then Factory

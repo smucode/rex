@@ -1,6 +1,7 @@
 _ = require 'underscore'
 
-Board = require './board'
+Board   = require './board'
+History = require './history'
 
 class Rex
 
@@ -21,6 +22,7 @@ class Rex
     @state = {}
     @select = @_curry
     @board = new Board fen
+    @_history = new History fen
     @_updateState()
 
   _updateState: (opts = {}) ->
@@ -59,7 +61,11 @@ class Rex
 
   _move: (src, dst) ->
     if src is dst or @state.board[dst].target
-      @board.move src, dst unless src is dst
+      unless src is dst
+        @board.move src, dst
+        @_history.add
+          move: [src, dst]
+          fen: @board._fen.toString()
       @_updateState()
       @select = @_curry
     else if @board.getState().valid_moves[dst]
