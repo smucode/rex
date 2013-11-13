@@ -2,21 +2,24 @@ _ = require 'underscore'
 
 class History
 
+  counter: 0
+
   constructor: (inital_fen) ->
     @plys = [{
-      ply: 0
       move: []
+      ply: @counter++
       fen: inital_fen
     }]
 
-  at: (ply) ->
-    @plys[ply]
+  current: ->
+    @plys[@counter - 1]
 
   add: (obj) ->
-    next_ply = @plys.length
+    next_ply = @counter++
     @plys.push _.extend {ply: next_ply}, obj
 
   back: ->
-    @plys[@plys.length - 3]
+    @counter -= 2
+    @current()
 
 module.exports = History

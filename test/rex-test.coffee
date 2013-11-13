@@ -17,7 +17,8 @@ vows
         rex.select 'e5'
 
         assert.equal rex.board._fen.toString(), 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2'
-        assert.equal rex.fenAtPreviousMove(), 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+        rex.back()
+        assert.equal rex.board._fen.toString(), 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
       'it should update history': ->
         rex = new Rex
@@ -25,7 +26,7 @@ vows
         rex.select 'e2'
         rex.select 'e4'
 
-        move = rex._history.at(1)
+        move = rex._history.current()
         assert.equal move.fen, 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1'
         assert.equal move.ply, 1
 

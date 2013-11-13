@@ -18,20 +18,9 @@ vows
       topic: new History('initial_fen')
 
       'first entry should be initial fen': (topic) ->
-        assert_ply topic.at(0),
+        assert_ply topic.current(),
           ply: 0
           move: []
           fen: 'initial_fen'
-
-      'insert new items': (topic) ->
-        topic.add({
-          'move': ['e2', 'e3'],
-          'fen': 'foo'
-        })
-
-        assert_ply topic.at(1),
-          ply: 1
-          move: ['e2', 'e3']
-          fen: 'foo'
 
   .export(module)

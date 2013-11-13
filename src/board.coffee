@@ -12,10 +12,13 @@ class Board
   _files: 'abcdefgh'
 
   constructor: (fen) ->
-    @_state = {}
     @eventHandlers = []
-    @_fen = new Fen(fen)
     @factory = new Factory
+    @reset fen
+
+  reset: (fen) ->
+    @_state = {}
+    @_fen = new Fen(fen)
     @_board = new Array(128)
 
     _.each @_fen.pieces, (piece, pos) =>
