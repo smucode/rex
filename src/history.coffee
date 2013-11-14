@@ -16,7 +16,7 @@ class History
 
   add: (obj) ->
     next_ply = @counter++
-    @plys.push _.extend {ply: next_ply}, obj
+    @plys[next_ply] = _.extend {ply: next_ply}, obj
 
   back: ->
     @counter -= 2
